@@ -147,18 +147,18 @@ export default function DoorCamera() {
       </header>
 
       <div className="relative w-full overflow-hidden rounded-xl bg-slate-900" style={{ aspectRatio: '4/3' }}>
-        {enabled && streamState === 'active' ? (
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className="h-full w-full object-cover"
-            alt="Live camera view of the entrance"
-          />
-        ) : (
-          <Placeholder reason={streamState} />
-        )}
+        {/* Always mounted so videoRef exists when startCamera() attaches the stream;
+            visibility is toggled instead of conditionally rendering the element. */}
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          className={`h-full w-full object-cover ${
+            enabled && streamState === 'active' ? '' : 'hidden'
+          }`}
+        />
+        {!(enabled && streamState === 'active') && <Placeholder reason={streamState} />}
       </div>
 
       {enabled && streamState === 'active' && (

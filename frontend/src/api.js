@@ -15,6 +15,7 @@ const isDeployedWeb = typeof window !== 'undefined' && (
 const useLocalStorage = true; // Always use local storage for now
 
 // Helper to get local API dynamically
+let localApi;
 const getLocalApi = async () => {
   if (!localApi) {
     localApi = await import('./api-local');

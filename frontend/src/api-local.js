@@ -36,8 +36,20 @@ export function getLogs({ date, guestId, limit } = {}) {
   return new Promise(async (resolve) => {
     await delay(100);
     const logs = await localStorageService.getLogs();
-    
-    let filtered = logs;
+    const guests = await localStorageService.getGuests();
+    const guestById = new Map(guests.map((g) => [g.id, g]));
+
+    // Movement rows need the guest's name and room to display; join them in
+    // here since the stored log only keeps guest_id.
+    let filtered = logs.map((log) => {
+      const guest = guestById.get(log.guest_id);
+      return {
+        ...log,
+        guest_name: guest?.name || 'Unknown guest',
+        room_no: guest?.room_no || '—',
+      };
+    });
+
     if (date) {
       filtered = filtered.filter(log => log.timestamp.startsWith(date));
     }
@@ -83,7 +95,7 @@ export function startEnrollment({ name, roomNo, phone, consent, photos }) {
     });
     
     resolve({
-      id: Date.now().toString(),
+      id: guest.id,
       name: guest.name,
       photo_count: guest.photo_count,
       status: 'done',
@@ -94,11 +106,13 @@ export function startEnrollment({ name, roomNo, phone, consent, photos }) {
 
 export const getEnrollment = async (jobId) => {
   await delay(100);
-  // In local version, enrollment is instant
+  // In local version, enrollment is instant - look up the guest that was just created
+  const guests = await localStorageService.getGuests();
+  const guest = guests.find(g => g.id === jobId);
   return {
     id: jobId,
     status: 'done',
-    guest: null
+    guest: guest || null
   };
 };
 
