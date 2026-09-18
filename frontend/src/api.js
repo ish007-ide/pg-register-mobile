@@ -2,8 +2,16 @@ import axios from 'axios';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
-// Check if running in Capacitor (mobile app)
+// Check if running in Capacitor (mobile app) or deployed web (use local storage)
 const isCapacitor = typeof window !== 'undefined' && window.Capacitor !== undefined;
+const isDeployedWeb = typeof window !== 'undefined' && (
+  window.location.hostname !== 'localhost' && 
+  window.location.hostname !== '127.0.0.1' &&
+  !window.location.hostname.includes('10.122')
+);
+
+// Use local storage for Capacitor apps or deployed web
+const useLocalStorage = isCapacitor || isDeployedWeb;
 
 // Helper to get local API dynamically
 const getLocalApi = async () => {
@@ -56,7 +64,7 @@ function serviceHeaders() {
 }
 
 export const getSummary = async () => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getSummary();
   }
@@ -64,7 +72,7 @@ export const getSummary = async () => {
 };
 
 export const getGuests = async () => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getGuests();
   }
@@ -72,7 +80,7 @@ export const getGuests = async () => {
 };
 
 export const getGuest = async (id) => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getGuest(id);
   }
@@ -80,7 +88,7 @@ export const getGuest = async (id) => {
 };
 
 export const getUnknownFaces = async (limit = 20) => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getUnknownFaces(limit);
   }
@@ -88,7 +96,7 @@ export const getUnknownFaces = async (limit = 20) => {
 };
 
 export async function getLogs({ date, guestId, limit } = {}) {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getLogs({ date, guestId, limit });
   }
@@ -102,7 +110,7 @@ export async function getLogs({ date, guestId, limit } = {}) {
 
 /** Manual override, for when the camera or the recognition service is down. */
 export async function logMovement({ guestId, direction, note }) {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.logMovement({ guestId, direction, note });
   }
@@ -125,7 +133,7 @@ export async function logMovement({ guestId, direction, note }) {
  * working for it, within a few seconds, without anyone pressing anything.
  */
 export const getDoorView = async () => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getDoorView();
   }
@@ -133,7 +141,7 @@ export const getDoorView = async () => {
 };
 
 export async function setDoorViewEnabled(enabled) {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.setDoorViewEnabled(enabled);
   }
@@ -150,7 +158,7 @@ export async function setDoorViewEnabled(enabled) {
 
 /** Starts the enrollment and returns a job to poll. */
 export async function startEnrollment({ name, roomNo, phone, consent, photos }) {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.startEnrollment({ name, roomNo, phone, consent, photos });
   }
@@ -162,7 +170,7 @@ export async function startEnrollment({ name, roomNo, phone, consent, photos }) 
 }
 
 export const getEnrollment = async (jobId) => {
-  if (isCapacitor) {
+  if (useLocalStorage) {
     const api = await getLocalApi();
     return api.getEnrollment(jobId);
   }
