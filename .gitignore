@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.env
+*.log
+
+# Biometric data and the register itself. embeddings.json is face data for
+# real people under the DPDP Act — it must never reach a git remote. The
+# other three are kept out because a committed register is a stale one.
+data/*.json
+data/*.tmp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Model packs land here on first run
+.insightface/
+
+# Capacitor
+frontend/android/
+frontend/ios/
+frontend/.capacitor/
+
+# OS
+.DS_Store
+Thumbs.db
