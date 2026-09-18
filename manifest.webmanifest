@@ -1,1 +1,1 @@
-{"name":"PG Register Mobile","short_name":"PG Register","description":"Mobile PG guest register and door monitoring","start_url":"/","display":"standalone","background_color":"#ffffff","theme_color":"#ffffff","lang":"en","scope":"/","orientation":"portrait"}
+{"name":"PG Register Mobile","short_name":"PG Register","description":"Mobile PG guest register and door monitoring","start_url":"/pg-register-mobile/","display":"standalone","background_color":"#ffffff","theme_color":"#ffffff","lang":"en","scope":"/pg-register-mobile/","orientation":"portrait"}
