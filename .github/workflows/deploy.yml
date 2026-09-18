@@ -1,18 +1,15 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy PWA
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
-    inputs:
-      manual_deploy:
-        description: 'Trigger manual deployment'
-        required: false
-        default: 'true'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
