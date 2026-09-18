@@ -44,4 +44,5 @@ export default defineConfig({
     // the PG wifi, not just from the mini PC itself.
     host: '0.0.0.0',
   },
+  base: '/pg-register-mobile/',
 });
