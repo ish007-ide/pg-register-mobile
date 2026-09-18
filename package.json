@@ -1,0 +1,13 @@
+{
+  "name": "pg-register",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Face recognition entry/exit register for a PG",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "test": "cd backend && npm test && cd ../recognition && python3 test_core.py && python3 test_service.py",
+    "seed": "cd backend && npm run seed",
+    "dev:api": "cd backend && npm start",
+    "dev:ui": "cd frontend && npm run dev"
+  }
+}

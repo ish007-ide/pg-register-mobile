@@ -1,0 +1,10 @@
+# Recognition service dependencies.
+#
+# Pinned loosely: these all have prebuilt wheels for x86-64 Linux, so the mini
+# PC needs no compiler. Deliberately absent: dlib and face_recognition — see
+# the README for why.
+
+numpy>=1.24,<3
+opencv-python-headless>=4.8        # drop the -headless if you want --preview
+insightface>=0.7.3
+onnxruntime>=1.17                  # swap for onnxruntime-openvino only if fps is the problem

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The register lives on a wall-mounted tablet and a phone at the door.
+   Stopping the pull-to-refresh bounce keeps a mis-swipe from looking like
+   a crash to whoever is checking someone in. */
+html,
+body,
+#root {
+  height: 100%;
+  overscroll-behavior-y: none;
+}

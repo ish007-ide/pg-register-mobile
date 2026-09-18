@@ -1,0 +1,13 @@
+{
+  "appId": "com.pgregister.mobile",
+  "appName": "PG Register Mobile",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Camera": {
+      "permissions": ["camera"]
+    }
+  }
+}
