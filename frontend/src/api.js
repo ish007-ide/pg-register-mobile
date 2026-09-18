@@ -7,11 +7,12 @@ const isCapacitor = typeof window !== 'undefined' && window.Capacitor !== undefi
 const isDeployedWeb = typeof window !== 'undefined' && (
   window.location.hostname !== 'localhost' && 
   window.location.hostname !== '127.0.0.1' &&
-  !window.location.hostname.includes('10.122')
+  !window.location.hostname.includes('10.122') &&
+  !window.location.hostname.includes('192.168')
 );
 
-// Use local storage for Capacitor apps or deployed web
-const useLocalStorage = isCapacitor || isDeployedWeb;
+// Force local storage for GitHub Pages and any deployed version
+const useLocalStorage = true; // Always use local storage for now
 
 // Helper to get local API dynamically
 const getLocalApi = async () => {
