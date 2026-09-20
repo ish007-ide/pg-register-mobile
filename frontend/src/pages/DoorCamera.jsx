@@ -59,14 +59,30 @@ export default function DoorCamera() {
         streamRef.current.getTracks().forEach(track => track.stop());
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: { exact: 'environment' },
-          width: { ideal: 640 },
-          height: { ideal: 480 },
-          frameRate: { ideal: 15, max: 15 },
-        },
-      });
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { exact: 'environment' },
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            frameRate: { ideal: 15, max: 15 },
+          },
+        });
+      } catch (envError) {
+        if (envError.name === 'OverconstrainedError' || envError.name === 'NotFoundError') {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: 'environment',
+              width: { ideal: 640 },
+              height: { ideal: 480 },
+              frameRate: { ideal: 15, max: 15 },
+            },
+          });
+        } else {
+          throw envError;
+        }
+      }
       streamRef.current = stream;
       
       if (videoRef.current) {
